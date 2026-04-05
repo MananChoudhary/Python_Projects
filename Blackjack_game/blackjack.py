@@ -38,25 +38,25 @@ def blackjack_game():
             pick_card_user()
         if len(computer_choice)==0:
             pick_card_computer()
-
+    
         print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
         print(f"Computer cards are : {computer_choice} and score is : {total_score_computer} \n")
-
+    
         while total_score_user<21 and total_score_computer<21:
             another_card=input("Do you want to play another card, type y or n : ")
             if another_card.lower() == "y":
                 pick_card_user()
-
+    
             if another_card.lower() == "n":
                 break
-
-
+    
+    
             print(f"Your cards are : {user_choice} and score is : {total_score_user} \n")
             print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-
+    
         while total_score_computer < 17:
                 pick_card_computer()
-
+    
         if total_score_computer>21:
             print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
             print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
@@ -67,13 +67,13 @@ def blackjack_game():
             print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
             print("Computer Win!")
             game=False
-
+    
         elif  total_score_user>total_score_computer and total_score_user<=21:
             print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
             print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
             print("You Win!")
             game=False
-
+    
         elif total_score_computer>total_score_user and total_score_computer<=21:
             print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
             print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
@@ -91,13 +91,13 @@ choose_play=input("Do you want to play blackgame, type y or n:  ")
 while want_to_play_again:
     if choose_play.lower() == "y":
         blackjack_game()
-
-    another_card=input("Do you want to play this game again, type y or n:  ")
-    if another_card.lower() == "y":
+    
+    play_again=input("Do you want to play this game again, type y or n:  ")
+    if play_again.lower() == "y":
         blackjack_game()
     else:
         want_to_play_again=False
         print("\nThanks for playing! See you Later!\n")
-
-
+        
+    
 
