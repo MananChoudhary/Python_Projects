@@ -2,102 +2,89 @@ import random
 import art
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-total_score_user=0
-total_score_computer=0
-user_choice=[]
-computer_choice=[]
-
-def pick_card_user():
-    global total_score_user
-    a=random.choice(cards)
-    user_choice.append(a)
-    total_score_user+=a
 
 
-def pick_card_computer():
-    global total_score_computer
-    b=random.choice(cards)
-    computer_choice.append(b)
-    total_score_computer+=b
 
-
-game=True
-want_to_play_again=True
-
-
+def pick_card():
+    return random.choice(cards)
+def calculate_score(hand):
+    if sum(hand)==21 and len(hand)==2:
+        return 0
+    if 11 in hand and sum(hand)>21:
+        hand.remove(11)
+        hand.append(1)
+    return sum(hand)
 
 def blackjack_game():
-    global total_score_user
-    global total_score_computer
-    global user_choice
-    global computer_choice
-    global game
+    user_choice = []
+    computer_choice = []
+    game=True
+
+    for i in range(2):
+        user_choice.append(pick_card())
+        computer_choice.append(pick_card())
     while game:
-        if len(user_choice)==0:
-            pick_card_user()
-            pick_card_user()
-        if len(computer_choice)==0:
-            pick_card_computer()
-    
+        total_score_user = calculate_score(user_choice)
+        total_score_computer = calculate_score(computer_choice)
         print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-        print(f"Computer cards are : {computer_choice} and score is : {total_score_computer} \n")
-    
-        while total_score_user<21 and total_score_computer<21:
-            another_card=input("Do you want to play another card, type y or n : ")
-            if another_card.lower() == "y":
-                pick_card_user()
-    
-            if another_card.lower() == "n":
-                break
-    
-    
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-    
-        while total_score_computer < 17:
-                pick_card_computer()
-    
-        if total_score_computer>21:
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-            print("You Win!")
+        print(f"Computer cards are : {computer_choice[0]} \n")
+
+        if total_score_user==0 or total_score_computer==0 or total_score_user>21:
             game=False
-        elif total_score_user>21:
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-            print("Computer Win!")
-            game=False
-    
-        elif  total_score_user>total_score_computer and total_score_user<=21:
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-            print("You Win!")
-            game=False
-    
-        elif total_score_computer>total_score_user and total_score_computer<=21:
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-            print("Computer Win!")
-            game=False
-        else:
-            print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
-            print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
-            print("Draw")
-            game = False
+        else :
+            user_pick_another_card=input("Do you want to play another card, type y or n : ")
+            if user_pick_another_card.lower() == "y":
+                user_choice.append(pick_card())
+            else:
+                game=False
+    while total_score_computer!=0 and  total_score_computer<17:
+        computer_choice.append(pick_card())
+        total_score_computer = calculate_score(computer_choice)
+
+    print(f"Your cards are : {user_choice} and score is : {total_score_user} \n ")
+    print(f"Computer cards are : {computer_choice} and score is : {total_score_computer} \n")
+
+
+        # while total_score_user<21 and total_score_computer<21:
+        #     another_card=input("Do you want to play another card, type y or n : ")
+        #     if another_card.lower() == "y":
+        #         pick_card_user()
+        #
+        #     if another_card.lower() == "n":
+        #         break
+        #
+        #
+        #     print(f"Your cards are : {user_choice} and score is : {total_score_user} \n")
+        #     print(f"Computer cards are : {computer_choice} and computer score is : {total_score_computer} \n")
+        #
+        # while total_score_computer < 17:
+        #         pick_card_computer()
+
+    if total_score_user > 21:
+        print("You went over. You lose!")
+    elif total_score_computer > 21:
+        print("Opponent went over. You win!")
+    elif total_score_user == total_score_computer:
+        print("Draw!")
+    elif total_score_computer == 0:
+        print("Lose, opponent has Blackjack!")
+    elif total_score_user == 0:
+        print("Win with a Blackjack!")
+    elif total_score_user > total_score_computer:
+        print("You win!")
+    else:
+        print("You lose!")
 
 
 print(art.logo+"\n")
-choose_play=input("Do you want to play blackgame, type y or n:  ")
-while want_to_play_again:
-    if choose_play.lower() == "y":
-        blackjack_game()
-    
-    play_again=input("Do you want to play this game again, type y or n:  ")
-    if play_again.lower() == "y":
+another_chance=True
+while another_chance:
+    a=input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
+    if a.lower()=="y":
         blackjack_game()
     else:
-        want_to_play_again=False
-        print("\nThanks for playing! See you Later!\n")
-        
-    
+        print("Thanks for playing with us! See you :) ")
+        another_chance=False
+
+
 
